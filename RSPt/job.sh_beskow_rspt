@@ -1,0 +1,31 @@
+#!/bin/bash -l
+# The -l above is required to get the full environment with modules
+
+# Set the allocation to be charged for this job
+# not required if you have set a default allocation
+#SBATCH -A 2017-12-53
+
+#SBATCH --mail-user duo.wang@physics.uu.se
+#SBATCH --mail-type=ALL
+
+# The name of the script is myjob
+#SBATCH -J LMO
+
+#SBATCH -t 04:30:00
+
+# Number of nodes
+#SBATCH -N 2
+# Number of MPI processes per node
+#SBATCH --ntasks-per-node=32
+# Number of MPI processes.
+
+#SBATCH -e error_file.e
+#SBATCH -o output_file.o
+
+module swap PrgEnv-cray PrgEnv-intel
+module swap intel/14.0.4.211 intel/15.0.1.133
+module unload cray-libsci
+
+# edit the path to the binary!
+#runs 'aprun -n 60 rspt' 1e-8 200
+aprun -n 36 rspt
