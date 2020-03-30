@@ -1,0 +1,47 @@
+# Simulation name
+simid ccfro001
+
+# Cell geometry
+ncell     5 5 5                System size            
+BC        P         P         P                 Boundary conditions (0=vacuum, P=periodic)
+cell       1 0 0
+           0 1 0  
+           0 0 1  
+           
+Sym       0                                     Symmetry of lattice (0 for no, 1 for cubic, 2 for 2d cubic, 3 for hexagonal)
+Mensemble 1
+
+# Additional files
+posfiletype D
+maptype 1
+posfile   ./posfile
+momfile   ./momfile
+exchange  ./jfile
+# Check paramter
+do_prnstruct 1
+
+# Initial magnetization
+Initmag   3                                     Initial config of moments (1=random, 2=cone, 3=spec., 4=file)
+#restartfile ./restart.bccFe100.out
+
+ip_mode   M                                     Initial phase parameters
+ip_mcanneal 1                                 --
+10000 TEMP 
+
+mode      M                                     S=SD, M=MC
+temp      TEMP                                   Measurement phase parameters
+mcNstep  50000
+Nstep  50000
+
+do_avrg   Y                                     Measure averages
+do_proj_avrg Y
+
+do_cumu Y
+cumu_step 50
+cumu_buff 10
+
+do_tottraj Y                                    Measure moments
+tottraj_step   1000
+
+plotenergy 1
+
